@@ -10,8 +10,6 @@ from mcp.server.auth.provider import AccessToken
 from mcp import ErrorData, McpError
 from mcp.types import TextContent, INVALID_PARAMS, INTERNAL_ERROR
 from pydantic import Field, BaseModel
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
 
 # --- Auth ---
 class SimpleBearerAuthProvider(BearerAuthProvider):
@@ -43,38 +41,6 @@ mcp = FastMCP(
     auth=SimpleBearerAuthProvider(TOKEN),
 )
 
-# Add health check endpoint
-app = FastAPI(title="AI Breakup Excuse Generator", version="1.0.0")
-
-@app.get("/health")
-async def health_check():
-    return JSONResponse(
-        status_code=200,
-        content={
-            "status": "healthy",
-            "service": "AI Breakup Excuse Generator",
-            "timestamp": datetime.now().isoformat(),
-            "auth_token": TOKEN,
-            "total_templates": sum(len(templates) for templates in BREAKUP_TEMPLATES.values())
-        }
-    )
-
-@app.get("/")
-async def root():
-    return JSONResponse(
-        status_code=200,
-        content={
-            "message": "AI Breakup Excuse Generator MCP Server",
-            "status": "running",
-            "endpoints": {
-                "health": "/health",
-                "mcp": "/mcp"
-            },
-            "auth_token": TOKEN,
-            "connect_with": f"/mcp connect https://your-domain.ngrok.app/mcp {TOKEN}"
-        }
-    )
-
 # --- Rich Tool Description model ---
 class RichToolDescription(BaseModel):
     description: str
@@ -85,6 +51,13 @@ class RichToolDescription(BaseModel):
 @mcp.tool
 async def validate() -> str:
     return MY_NUMBER
+
+# --- Tool: health check ---
+@mcp.tool
+async def health_check() -> str:
+    """Check if the MCP server is healthy"""
+    total_templates = sum(len(templates) for templates in BREAKUP_TEMPLATES.values())
+    return f"✅ AI Breakup Excuse Generator is healthy! Total templates: {total_templates}"
 
 # --- Massive Template Collection ---
 BREAKUP_TEMPLATES = {
@@ -350,8 +323,7 @@ async def main():
     print(f"🌐 Server URL: http://{HOST}:{PORT}")
     print("📱 Connect with: /mcp connect https://your-domain.ngrok.app/mcp breakup-excuse-token-2024")
     
-    # Mount the FastAPI app with the MCP server
-    mcp.mount_app(app)
+    # Run the MCP server directly
     await mcp.run_async("streamable-http", host=HOST, port=PORT)
 
 if __name__ == "__main__":
