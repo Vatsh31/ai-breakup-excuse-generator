@@ -1,1 +1,1 @@
-web: python start.py 
+web: cd mcp-bearer-token && python breakup_generator_simple.py 

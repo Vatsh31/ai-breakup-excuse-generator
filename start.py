@@ -37,6 +37,13 @@ def main():
     
     # Import and run the main application
     try:
+        # Add current directory to Python path
+        sys.path.insert(0, os.getcwd())
+        
+        # List files in current directory for debugging
+        print(f"📂 Files in current directory: {os.listdir('.')}")
+        
+        # Try to import the module
         from breakup_generator_simple import main as app_main
         print("✅ Application imported successfully")
         
@@ -45,6 +52,8 @@ def main():
         
     except ImportError as e:
         print(f"❌ Failed to import application: {e}")
+        print(f"💡 Current working directory: {os.getcwd()}")
+        print(f"💡 Python path: {sys.path}")
         print("💡 Make sure all dependencies are installed: pip install -r requirements.txt")
         sys.exit(1)
     except Exception as e:
