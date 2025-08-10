@@ -1,0 +1,8 @@
+version: "2"
+authtoken: YOUR_NGROK_AUTH_TOKEN
+tunnels:
+  breakup-generator:
+    addr: 8087
+    proto: http
+    subdomain: ai-breakup-excuse-generator
+    inspect: true 

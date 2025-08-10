@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ai-breakup-excuse-generator
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python start.py
+    envVars:
+      - key: AUTH_TOKEN
+        value: breakup-excuse-token-2024
+      - key: MY_NUMBER
+        value: 919876543210
+      - key: HOST
+        value: 0.0.0.0
+    healthCheckPath: /health
+    autoDeploy: true 

@@ -1,157 +1,200 @@
-# 💔 AI Breakup Excuse Generator - Puch AI Hackathon
+# AI Breakup Excuse Generator 🚀
 
-A viral-worthy MCP server that generates wildly over-the-top, weird, and funny excuses to end relationships. Perfect for the Puch AI hackathon with **189 unique templates** across 7 different styles!
+A hilarious MCP (Model Context Protocol) server that generates over-the-top, viral-worthy breakup excuses. Perfect for the Puch AI hackathon!
 
-## 🚀 Features
+## Features
 
-- **189 Unique Templates** - Massive variety ensures users rarely see the same excuse twice
-- **7 Creative Styles**: dramatic, funny, sci-fi, poetic, absurd, viral, trending
-- **Viral Potential** - Each excuse is designed to be screenshot and shared on social media
-- **Easy to Use** - Just 2 inputs: name + style
-- **Perfect for Phase 1** - Weird enough for creativity points!
+- 🎭 **7 Different Styles**: Dramatic, Funny, Sci-fi, Poetic, Absurd, Viral, and Trending
+- 🔥 **150+ Templates**: Massive collection of creative breakup excuses
+- 🌐 **MCP Protocol**: Compatible with any MCP client
+- 🔐 **Bearer Token Auth**: Secure authentication
+- 📱 **Viral Ready**: Designed to be screenshot and shared on social media
 
-## 🎯 Why This Works
+## Quick Start
 
-- **Viral Factor** – People will screenshot & share
-- **Easy to Try** – Only 2 inputs required
-- **Weird Enough** – Perfect for Phase 1 creativity points
-- **Massive Variety** – 189 templates across 7 styles
+### Local Development
 
-## 📊 Template Breakdown
+1. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-| Style | Templates | Description |
-|-------|-----------|-------------|
-| **Dramatic** | 20 | Epic, theatrical excuses |
-| **Funny** | 27 | Absurd, hilarious reasons |
-| **Sci-fi** | 25 | Space, aliens, time travel |
-| **Poetic** | 25 | Romantic but ending |
-| **Absurd** | 25 | Completely ridiculous |
-| **Viral** | 25 | Social media focused |
-| **Trending** | 25 | Current lifestyle trends |
+2. **Run the server:**
+   ```bash
+   cd mcp-bearer-token
+   python breakup_generator_simple.py
+   ```
 
-## 🛠️ Quick Setup
+3. **Test the API:**
+   ```bash
+   curl http://localhost:8087/health
+   ```
 
-### 1. Clone and Setup
+### Using ngrok for Local Development
+
+1. **Install ngrok:**
+   - Download from [ngrok.com](https://ngrok.com/)
+   - Get your auth token from the dashboard
+
+2. **Configure ngrok:**
+   - Update `ngrok.yml` with your auth token
+   - Or use the deployment script:
+   ```bash
+   chmod +x deploy.sh
+   ./deploy.sh
+   ```
+
+3. **Manual ngrok setup:**
+   ```bash
+   # Start your server first
+   cd mcp-bearer-token
+   python breakup_generator_simple.py
+   
+   # In another terminal, start ngrok
+   ngrok http 8087
+   ```
+
+4. **Connect to MCP:**
+   ```bash
+   /mcp connect https://your-ngrok-url.ngrok.io/mcp breakup-excuse-token-2024
+   ```
+
+## Deploy to Render.com
+
+### Option 1: Using render.yaml (Recommended)
+
+1. **Push to GitHub:**
+   ```bash
+   git add .
+   git commit -m "Add deployment files"
+   git push origin main
+   ```
+
+2. **Deploy on Render:**
+   - Go to [render.com](https://render.com)
+   - Connect your GitHub repository
+   - Render will automatically detect the `render.yaml` file
+   - Deploy!
+
+### Option 2: Manual Deployment
+
+1. **Create a new Web Service on Render:**
+   - Environment: Python
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `cd mcp-bearer-token && python breakup_generator_simple.py`
+
+2. **Set Environment Variables:**
+   - `AUTH_TOKEN`: `breakup-excuse-token-2024`
+   - `MY_NUMBER`: `919876543210`
+
+3. **Deploy!**
+
+## API Endpoints
+
+- `GET /` - Root endpoint with service info
+- `GET /health` - Health check for Render.com
+- `POST /mcp` - MCP protocol endpoint
+
+## MCP Connection
+
+Once deployed, connect using:
+
 ```bash
-git clone <your-repo-url>
-cd mcp-starter
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1  # Windows
-pip install fastmcp fastapi uvicorn python-dotenv
+/mcp connect https://your-render-app.onrender.com/mcp breakup-excuse-token-2024
 ```
 
-### 2. Run the Server
-```bash
-cd mcp-bearer-token
-python breakup_generator_simple.py
-```
+## Available Styles
 
-### 3. Make it Public (Required by Puch)
-```bash
-ngrok http 8087
-```
+1. **Dramatic** - Over-the-top dramatic excuses
+2. **Funny** - Hilarious and absurd reasons
+3. **Sci-fi** - Space and technology themed
+4. **Poetic** - Beautiful and metaphorical
+5. **Absurd** - Completely ridiculous excuses
+6. **Viral** - Social media and influencer themed
+7. **Trending** - Current internet trends and memes
 
-### 4. Connect to Puch AI
-```
-/mcp connect https://your-ngrok-url.ngrok.app/mcp 95653634309vatshchheda312004
-```
+## Environment Variables
 
-## 📱 Usage Examples
+- `AUTH_TOKEN` - Bearer token for authentication (default: `breakup-excuse-token-2024`)
+- `MY_NUMBER` - Phone number for validation (default: `919876543210`)
 
-### Connect to Puch AI
-```
-/mcp connect https://your-domain.ngrok.app/mcp 95653634309vatshchheda312004
-```
+## Development
 
-### Generate Excuses
-```
-"Generate a dramatic breakup excuse for Alex"
-"Create a funny breakup excuse for Sarah"
-"Give me a trending breakup excuse for Mike"
-"Show me a sci-fi breakup excuse for Emma"
-```
-
-## 🎭 Sample Excuses
-
-### Dramatic
-> "💔 Alex, our love burns too bright and must extinguish before it consumes the world. I cannot bear to watch us both turn to ash."
-
-### Funny
-> "😂 Sarah, it's not you… it's me and my obsession with competitive cheese rolling. I can't be with someone who doesn't understand the art of dairy athletics."
-
-### Sci-fi
-> "🚀 Mike, the Galactic Council forbids our union across star systems. I received the transmission this morning."
-
-### Viral
-> "📱 Emma, I just got 10,000 followers on TikTok for my 'single life' content. My followers say you're holding me back from my true potential."
-
-## 🔧 Technical Details
-
-- **Framework**: FastMCP 2.11.2
-- **Language**: Python 3.11+
-- **Port**: 8087
-- **Auth**: Bearer Token
-- **Templates**: 189 unique excuses
-- **Styles**: 7 different categories
-
-## 📁 Project Structure
+### Project Structure
 
 ```
-mcp-starter/
 ├── mcp-bearer-token/
-│   ├── breakup_generator_simple.py    # Main AI Breakup Excuse Generator
-│   ├── mcp_starter.py                 # Original starter
-│   └── puch-user-id-mcp-example.py   # Task management example
-├── mcp-google-oauth/                  # Google OAuth example
-├── mcp-oauth-github/                  # GitHub OAuth example
-└── README.md
+│   └── breakup_generator_simple.py  # Main MCP server
+├── requirements.txt                 # Python dependencies
+├── render.yaml                     # Render.com deployment config
+├── Procfile                        # Render.com process file
+├── ngrok.yml                       # ngrok configuration
+├── deploy.sh                       # Local deployment script
+└── README.md                       # This file
 ```
 
-## 🎯 Perfect for Puch AI Hackathon
+### Adding New Templates
 
-This project is specifically designed for the **Puch AI hackathon** with:
+Edit `BREAKUP_TEMPLATES` in `breakup_generator_simple.py` to add new excuses:
 
-- ✅ **Viral Potential** - Designed for social media sharing
-- ✅ **Easy to Use** - Simple 2-input interface
-- ✅ **Creative & Weird** - Perfect for Phase 1 creativity points
-- ✅ **Massive Variety** - 189 templates ensure uniqueness
-- ✅ **MCP Ready** - Fully compatible with Puch AI
+```python
+BREAKUP_TEMPLATES = {
+    "your_style": [
+        "Your template here with {name} placeholder",
+        "Another template...",
+    ],
+    # ... existing styles
+}
+```
 
-## 🚀 Deployment Options
+## Troubleshooting
 
-### Option 1: ngrok (Quick & Easy)
+### Common Issues
+
+1. **Port already in use:**
+   ```bash
+   # Find and kill the process
+   lsof -ti:8087 | xargs kill -9
+   ```
+
+2. **ngrok not working:**
+   - Check your auth token in `ngrok.yml`
+   - Ensure ngrok is installed and in your PATH
+
+3. **Render deployment fails:**
+   - Check the build logs
+   - Ensure all dependencies are in `requirements.txt`
+   - Verify the start command is correct
+
+### Health Check
+
+Test if your server is running:
+
 ```bash
-ngrok http 8087
+curl http://localhost:8087/health
 ```
 
-### Option 2: Cloud Deployment
-- Railway
-- Render
-- Heroku
-- DigitalOcean App Platform
+Should return:
+```json
+{
+  "status": "healthy",
+  "service": "AI Breakup Excuse Generator",
+  "timestamp": "2024-01-01T12:00:00",
+  "auth_token": "breakup-excuse-token-2024",
+  "total_templates": 150
+}
+```
 
-## 📞 Support
+## License
 
-- **Puch AI Discord**: https://discord.gg/VMCnMvYx
-- **Puch AI MCP docs**: https://puch.ai/mcp
-- **Puch WhatsApp**: +91 99988 81729
+MIT License - Feel free to use this for your hackathon projects!
 
-## 🏆 Hackathon Ready!
+## Contributing
 
-This AI Breakup Excuse Generator is perfect for the Puch AI hackathon because:
-
-1. **Viral Factor** – People will screenshot & share
-2. **Easy to Try** – Only 2 inputs required
-3. **Weird Enough** – Perfect for Phase 1 creativity points
-4. **Massive Variety** – 189 templates across 7 styles
-5. **Social Media Ready** – Designed for sharing and engagement
-
----
-
-**Happy coding! 🚀**
-
-Use the hashtag `#BuildWithPuch` in your posts about your MCP!
+1. Fork the repository
+2. Add your creative breakup excuses
+3. Submit a pull request
 
 ---
 
-*This starter makes it super easy to create your own MCP server for Puch AI. Just follow the setup steps and you'll be ready to extend Puch with your custom tools!*
+Made with ❤️ for the Puch AI hackathon! 🚀
